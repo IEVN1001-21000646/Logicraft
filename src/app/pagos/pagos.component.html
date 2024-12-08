@@ -1,0 +1,272 @@
+<body>
+  <div class="payment-container">
+    <h1>Procesar Pago</h1>
+  
+    <label for="method">Método de Pago:</label>
+    <select id="method" [(ngModel)]="paymentData.method" name="method" required>
+      <option value="oxxo">OXXO</option>
+      <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+    </select>
+  
+    <div *ngIf="paymentData.method === 'tarjeta'" class="payment-container">
+      
+      <label for="card_name">Nombre en la Tarjeta:</label>
+      <input
+        type="text"
+        id="card_name"
+        [(ngModel)]="paymentData.card_name"
+        name="card_name"
+        placeholder="Nombre del titular"
+        required
+      />
+  
+      <label for="card_number">Número de Tarjeta:</label>
+      <input
+        type="text"
+        id="card_number"
+        [(ngModel)]="paymentData.card_number"
+        name="card_number"
+        placeholder="1234 5678 9012 3456"
+        required
+      />
+  
+      <label for="cvv">CVV:</label>
+      <input
+        type="text"
+        id="cvv"
+        [(ngModel)]="paymentData.cvv"
+        name="cvv"
+        placeholder="123"
+        required
+      />
+  
+      <label for="expiry_date">Fecha de Expiración:</label>
+      <input
+        type="date"
+        id="expiry_date"
+        [(ngModel)]="paymentData.expiry_date"
+        name="expiry_date"
+        required
+      />
+  
+      <label for="bank">Banco:</label>
+      <input
+        type="text"
+        id="bank"
+        [(ngModel)]="paymentData.bank"
+        name="bank"
+        placeholder="Nombre del banco"
+        required
+      />
+    </div>
+  
+    <div *ngIf="paymentData.method === 'oxxo'" class="oxxo-form">
+      <p>Se generará una referencia OXXO automáticamente.</p>
+    </div>
+  
+    <button class="add" (click)="processPayment()" [disabled]="!paymentData.method">Pagar</button>
+    <button class="add" (click)="downloadFull()">
+      Descargar
+    </button>
+  
+    <div *ngIf="paymentResponse">
+      <p>{{ paymentResponse }}</p>
+      <div *ngIf="oxxoReference">
+        <p><strong>Ve a tu OXXO mas cercano. Referencia OXXO:</strong> {{ oxxoReference }}</p>
+      </div>
+    </div>
+  </div>
+</body> 
+  <style>
+
+.edit-form {
+  background-color: rgba(22, 22, 37, 0.9); 
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  text-align: center;
+}
+
+.edit-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #d946ef, #7f5af0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.edit-form label {
+  display: block;
+  margin: 10px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.edit-form input,
+.edit-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+.edit-form button {
+  padding: 10px 20px;
+  margin: 10px 5px; 
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  color: #ffffff;
+}
+
+.edit-form .save-btn {
+  background: linear-gradient(90deg, #7f5af0, #d946ef); 
+}
+
+.edit-form .save-btn:hover {
+  background: linear-gradient(90deg, #d946ef, #7f5af0);
+  transform: scale(1.05);
+}
+
+.edit-form .cancel-btn {
+  background: linear-gradient(90deg, #b0bec5, #90a4ae); 
+}
+
+.edit-form .cancel-btn:hover {
+  background: linear-gradient(90deg, #90a4ae, #b0bec5);
+  transform: scale(1.05);
+}
+
+.edit-form button:active {
+  transform: scale(0.95);
+}
+    
+.payment-container {
+  background-color: rgba(22, 22, 37, 0.7); 
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  color: #ffffff; 
+  text-align: center; 
+}
+
+.payment-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #d946ef, #7f5af0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.payment-container label {
+  display: block;
+  margin: 10px 0;
+  font-size: 16px;
+  text-align: left; 
+}
+
+.payment-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+.payment-container p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.payment-container button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(90deg, #7f5af0, #d946ef);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.payment-container button:hover {
+  background: linear-gradient(90deg, #d946ef, #7f5af0);
+}
+
+.response-container {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2); 
+}
+
+body 
+        {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh; 
+        background: linear-gradient(135deg, #1a1a2e, #7f5af0, #d946ef);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #ffffff;
+        display: flex; 
+        flex-direction: column; 
+        }
+
+input, select {
+  width: 100%; 
+  padding: 10px; 
+  margin-bottom: 15px; 
+  border-radius: 8px; 
+  border: 2px solid rgba(127, 90, 240, 0.5); 
+  background-color: rgba(22, 22, 37, 0.8); 
+  color: #ffffff; 
+  font-size: 16px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  outline: none; 
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+input:focus, select:focus {
+  border-color: #7f5af0; 
+  box-shadow: 0 4px 10px rgba(127, 90, 240, 0.7); 
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7); 
+  font-style: italic; 
+}
+
+select {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  input, select {
+    font-size: 14px;
+  }
+}
+
+
+  </style>

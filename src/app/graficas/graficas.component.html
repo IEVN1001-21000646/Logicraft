@@ -1,0 +1,128 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard LogiCraft</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .chart-container {
+            animation: fadeIn 1.5s ease-out;
+            background-color: rgba(22, 22, 37, 0.7);
+            padding: 20px; /* Ajustar padding */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        canvas {
+            display: block;
+            max-width: auto; /* Reducir tamaño general */
+            height: auto;
+            margin: 0 auto; /* Centrar gráficas */
+        }
+
+        h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* La primera columna más grande */
+            grid-template-rows: auto auto; /* Dos filas */
+            gap: 20px; /* Reducir espacio entre gráficas */
+            align-items: stretch;
+        }
+
+        .sidebar {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-purple-700 via-purple-500 to-purple-300 min-h-screen flex fade-in">
+
+    <!-- Sidebar -->
+    <div class="sidebar bg-black bg-opacity-60 w-64 fixed h-full p-6 flex flex-col items-center">
+        <h1 class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 text-2xl font-semibold mb-8">LogiCraft</h1>
+
+        <div class="nav-links space-y-6 w-full">
+            <a [routerLink]="['/dashboard']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">bar_chart</span>
+                <span>Estadísticas</span>
+            </a>
+            <a [routerLink]="['/manage-users']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">group</span>
+                <span>Gestión de Usuarios</span>
+            </a>
+            <a [routerLink]="['/manage-ads']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">campaign</span>
+                <span>Gestión de Anuncios</span>
+            </a>
+            <a [routerLink]="['/gestion-pagos']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">credit_card</span>
+                <span>Gestión de Pagos</span>
+            </a>
+            <a [routerLink]="['/diagramas']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">account_tree</span>
+                <span>Procesos</span>
+            </a>
+            <a [routerLink]="['/graficos']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">query_stats</span>
+                <span>Gráficos</span>
+            </a>
+            <a [routerLink]="['/apis']" class="text-white flex items-center space-x-2 hover:text-pink-400 transition-colors p-2 rounded-lg">
+                <span class="material-icons">map</span>
+                <span>Gestión de APIs</span>
+            </a>
+        </div>
+
+        <button class="w-full py-2 mt-8 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg hover:bg-gradient-to-l transition-colors" (click)="logout()">
+            Cerrar Sesión
+        </button>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content ml-64 w-full p-4">
+        <div class="container mx-auto">
+            <h1 class="text-white text-4xl font-semibold text-center mb-4 fade-in">Gráficos</h1>
+
+            <div class="dashboard-grid">
+                <!-- Gráfico de Métodos de Pago (Pie Chart) -->
+                <div class="chart-container fade-in" style="grid-row: 1 / span 2;">
+                    <h2>Métodos de Pago</h2>
+                    <canvas id="paymentChart"></canvas>
+                </div>
+
+                <!-- Gráfico de Usuarios (Horizontal Bar Chart) -->
+                <div class="chart-container fade-in">
+                    <h2>Usuarios</h2>
+                    <canvas id="userChart"></canvas>
+                </div>
+
+                <!-- Gráfico de Descargas (Bar Chart) -->
+                <div class="chart-container fade-in">
+                    <h2>Descargas</h2>
+                    <canvas id="downloadChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

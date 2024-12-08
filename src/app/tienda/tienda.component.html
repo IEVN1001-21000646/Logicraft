@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda - LogiCraft</title>
+    <style>
+        body 
+        {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh; 
+        background: linear-gradient(135deg, #1a1a2e, #7f5af0, #d946ef);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #ffffff;
+        display: flex; 
+        flex-direction: column; 
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(22, 22, 37, 0.7); 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+        }
+
+        .navbar h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #d946ef, #7f5af0); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+        .navbar button {
+            padding: 8px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(90deg, #7f5af0, #d946ef);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .navbar button:hover {
+            background: linear-gradient(90deg, #d946ef, #7f5af0);
+        }
+
+        section {
+            background-color: rgba(22, 22, 37, 0.7);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+
+
+
+        p, ul {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        }
+        
+        h2 {color: #7f5af0;}
+        /* Botones */
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(90deg, #7f5af0, #d946ef);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #d946ef, #7f5af0);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>CodeWave Store</h1>
+        <button (click)="logout()"  class="add">Cerrar Sesión</button>
+
+    </div>
+
+
+
+    <section>
+        <h2>Acerca del Videojuego</h2>
+        <p><strong>Nombre:</strong> LogiCraft</p>
+        <p><strong>Descripción:</strong> Aprende las bases de la lógica de programación con este videojuego interactivo en pixel art.</p>
+        <ul>
+            <li>Personaje personalizable.</li>
+            <li>Recompensas por progreso.</li>
+            <li>Niveles diseñados para enseñar lógica paso a paso.</li>
+        </ul>
+        <h1 style="color: #88f5ff; text-shadow: 0 0 1px #46e1ef, 0 0 3px #46e1ef, 0 0 5px #46e1ef;">
+            <strong>Precio:</strong> $199 MXN
+        </h1>
+        
+        <button (click)="goToPayment()">Comprar Videojuego</button>
+        <button (click)="downloadDemo()">Descargar Demo</button>
+    </section>
+</body>
+</html>
